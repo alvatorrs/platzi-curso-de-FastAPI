@@ -1,20 +1,30 @@
+# Python
+from typing import Optional
+# Pydantic
+from pydantic import BaseModel
+# FastAPI
 from fastapi import FastAPI
+from fastapi import Body
+
 
 app = FastAPI()
 
+
+class Person(BaseModel):
+    name: str
+    last_name: str
+    age: str
+    marital_status: Optional[bool] = None
+
+
+
 @app.get("/")
 def home():
-    return {'Saludo': 'Hello, world!'}
+    return {'Mensaje': 'Hola, mundo!'}
 
 
-@app.get("/despedida")
-def next():
-    return {
-            'Despedida': 'Esto no es un adios',
-            'Bueno': 'Parece que si lo es, adios!'
-            }
+# Request and Response Body
 
-
-@app.get('/encuentro')
-def prev():
-    return 'Parece que nos volvimos a ver'
+@app.post("/person/new") #
+def create_person(person: Person = Body(...)):
+    return person
