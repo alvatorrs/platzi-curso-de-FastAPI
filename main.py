@@ -6,16 +6,15 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi import Body
 
+app = FastAPI(title="Request and response body")
 
-app = FastAPI()
-
+# Models
 
 class Person(BaseModel):
-    name: str
+    first_name: str
     last_name: str
     age: str
-    marital_status: Optional[bool] = None
-
+    is_married: Optional[bool] = None
 
 
 @app.get("/")
@@ -25,6 +24,6 @@ def home():
 
 # Request and Response Body
 
-@app.post("/person/new") #
+@app.post("/person/new") #request body
 def create_person(person: Person = Body(...)):
     return person
